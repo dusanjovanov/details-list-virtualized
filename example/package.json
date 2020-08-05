@@ -13,15 +13,24 @@
     "@testing-library/jest-dom": "link:../node_modules/@testing-library/jest-dom",
     "@testing-library/react": "link:../node_modules/@testing-library/react",
     "@testing-library/user-event": "link:../node_modules/@testing-library/user-event",
+    "@types/faker": "^4.1.12",
     "@types/jest": "link:../node_modules/@types/jest",
+    "@types/moment": "^2.13.0",
     "@types/node": "link:../node_modules/@types/node",
     "@types/react": "link:../node_modules/@types/react",
     "@types/react-dom": "link:../node_modules/@types/react-dom",
+    "@types/react-toast-notifications": "^2.4.0",
+    "@types/styled-components": "^5.1.2",
+    "details-list-virtualized": "link:..",
+    "faker": "^4.1.0",
+    "moment": "^2.27.0",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
     "react-scripts": "link:../node_modules/react-scripts",
-    "typescript": "link:../node_modules/typescript",
-    "details-list-virtualized": "link:.."
+    "react-toast-notifications": "^2.4.0",
+    "react-tooltip": "^4.2.7",
+    "styled-components": "^5.1.1",
+    "typescript": "link:../node_modules/typescript"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
