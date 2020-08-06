@@ -68,4 +68,7 @@ const Root = styled.div`
 
 const Label = styled.span`
   margin-left: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
