@@ -3,9 +3,9 @@ import { CSSProperties, ReactNode } from 'react'
 export type ColDef = {
   label: string
   key: string
-  isSortable: boolean
+  isSortable?: boolean
   width: number
-  align?: CSSProperties['textAlign']
+  align?: 'left' | 'center' | 'right'
   style?: CSSProperties
   render?: (props: {
     col: ColDef
@@ -19,6 +19,8 @@ export type ColDef = {
     colIndex: number
     rowIndex: number
   }) => ReactNode
+  renderLabel?: (props: { col: ColDef; colIndex: number }) => ReactNode
+  renderHeader?: (props: { col: ColDef; colIndex: number }) => ReactNode
   data?: { [key: string]: any }
 }
 

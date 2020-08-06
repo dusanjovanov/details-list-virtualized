@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import { GridCellProps } from 'react-virtualized'
 import { Icon } from 'office-ui-fabric-react'
+import React, { ReactNode } from 'react'
+import { GridCellProps } from 'react-virtualized'
+import styled from 'styled-components'
 import { ColDef, SortProp } from './types'
 
 type Props = {
@@ -19,31 +19,55 @@ export const HeaderCell = ({
   isLoading,
   onClick
 }: Props) => {
-  const { style } = cellProps
+  const { style, columnIndex } = cellProps
+
+  let label: ReactNode = <Label>{col.label}</Label>
+
+  if (col.renderLabel) {
+    label = col.renderLabel({ col, colIndex: columnIndex })
+  }
+
+  let headerContent
+
+  if (col.renderHeader) {
+    headerContent = col.renderHeader({ col, colIndex: columnIndex })
+  }
+  //
+  else {
+    headerContent = (
+      <CellPadding>
+        {sort && col.isSortable && (
+          <StyledIcon
+            iconName={
+              sort.key === col.key
+                ? sort.dir === 'asc'
+                  ? 'SortUp'
+                  : 'SortDown'
+                : 'Sort'
+            }
+          />
+        )}
+        {label}
+      </CellPadding>
+    )
+  }
+
+  let align = 'flex-start'
+  if (col.align) align = col.align
+  if (col.align === 'right') align = 'flex-end'
 
   return (
     <Root
       style={{
         ...style,
         cursor: isLoading ? 'wait' : 'pointer',
-        justifyContent: col.align ? col.align : 'flex-start'
+        justifyContent: align
       }}
       onClick={() => {
         onClick && onClick(col)
       }}
     >
-      {sort && col.isSortable && (
-        <Icon
-          iconName={
-            sort.key === col.key
-              ? sort.dir === 'asc'
-                ? 'SortUp'
-                : 'SortDown'
-              : 'Sort'
-          }
-        />
-      )}
-      <Label>{col.label}</Label>
+      {headerContent}
     </Root>
   )
 }
@@ -53,7 +77,6 @@ const Root = styled.div`
   text-align: left;
   height: 100%;
   font-weight: 600;
-  padding: 0 12px 0 12px;
   display: flex;
   align-items: center;
   border-top: 1px solid rgb(237, 235, 233);
@@ -67,9 +90,16 @@ const Root = styled.div`
   }
 `
 
-const Label = styled.span`
-  margin-left: 5px;
+const CellPadding = styled.div`
+  padding: 0 12px 0 12px;
+`
+
+const Label = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+`
+
+const StyledIcon = styled(Icon)`
+  margin-right: 5px;
 `

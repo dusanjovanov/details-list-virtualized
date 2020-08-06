@@ -7,6 +7,7 @@ import ReactTooltip from 'react-tooltip'
 import { createPortal } from 'react-dom'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
+import { Icon } from 'office-ui-fabric-react'
 
 const getCols = (
   rows: any[],
@@ -37,6 +38,13 @@ const getCols = (
       width: 150,
       transform: ({ row }) => {
         return moment(row.dob).format('LL')
+      },
+      renderLabel: () => {
+        return (
+          <div style={{ display: 'flex' }}>
+            <Icon iconName='Calendar' />
+          </div>
+        )
       }
     },
     {
@@ -176,7 +184,7 @@ const getCols = (
       width: 40,
       render: ({ row, rowIndex }) => {
         return (
-          <OptionsCell>
+          <CenteredCell>
             <button
               style={{ padding: '2px' }}
               onClick={() => {
@@ -193,13 +201,62 @@ const getCols = (
             >
               🗑️
             </button>
-          </OptionsCell>
+          </CenteredCell>
         )
       }
+    },
+    {
+      key: 'filler',
+      label: '',
+      renderHeader: () => {
+        return (
+          <iframe
+            width='100%'
+            height='100%'
+            src='https://www.youtube.com/embed/tgbNymZ7vqY'
+          ></iframe>
+        )
+      },
+      align: 'center',
+      render: ({ row }) => {
+        return (
+          <CenteredCell>
+            <img
+              id={`image-${row.id}`}
+              style={{
+                width: 40,
+                height: '100%',
+                marginRight: 5
+              }}
+              src='https://picsum.photos/40/40'
+            />
+            <button
+              onClick={() => {
+                const img = document.getElementById(
+                  `image-${row.id}`
+                ) as HTMLImageElement
+                img.src = `https://picsum.photos/${getRandomInt(
+                  30,
+                  40
+                )}/${getRandomInt(30, 40)}`
+              }}
+            >
+              New image
+            </button>
+          </CenteredCell>
+        )
+      },
+      width: 0
     }
   ]
 
   return cols
+}
+
+function getRandomInt(min: number, max: number) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 const initRows = Array(1000)
@@ -249,6 +306,10 @@ const App = () => {
     ])
   }, [sort])
 
+  useEffect(() => {
+    setWidth(Math.min(width, windowWidth))
+  }, [windowWidth, width])
+
   const headerHeight = 100
 
   return (
@@ -290,6 +351,12 @@ const App = () => {
         columnCount={cols.length}
         rowCount={rows.length}
         columnWidth={({ index }) => {
+          if (cols[index].key === 'filler') {
+            return Math.max(
+              0,
+              cols.reduce((sum, c) => sum + c.width, 0)
+            )
+          }
           return cols[index].width
         }}
         fixedColumnCount={fixedCols}
@@ -336,7 +403,7 @@ const App = () => {
 
 export default App
 
-const OptionsCell = styled.div`
+const CenteredCell = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
