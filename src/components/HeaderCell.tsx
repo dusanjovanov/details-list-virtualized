@@ -35,7 +35,7 @@ export const HeaderCell = ({
   //
   else {
     headerContent = (
-      <CellPadding>
+      <DefaultCell>
         {sort && col.isSortable && (
           <StyledIcon
             iconName={
@@ -48,7 +48,7 @@ export const HeaderCell = ({
           />
         )}
         {label}
-      </CellPadding>
+      </DefaultCell>
     )
   }
 
@@ -74,11 +74,8 @@ export const HeaderCell = ({
 
 const Root = styled.div`
   font-size: 14px;
-  text-align: left;
   height: 100%;
   font-weight: 600;
-  display: flex;
-  align-items: center;
   border-top: 1px solid rgb(237, 235, 233);
   border-bottom: 1px solid rgb(237, 235, 233);
   user-select: none;
@@ -90,8 +87,11 @@ const Root = styled.div`
   }
 `
 
-const CellPadding = styled.div`
+const DefaultCell = styled.div`
   padding: 0 12px 0 12px;
+  display: flex;
+  align-items: center;
+  height: 100%;
 `
 
 const Label = styled.div`
