@@ -58,6 +58,7 @@ const Root = styled.div`
   align-items: center;
   border-top: 1px solid rgb(237, 235, 233);
   border-bottom: 1px solid rgb(237, 235, 233);
+  user-select: none;
   &:hover {
     background-color: rgb(243, 242, 241);
   }
