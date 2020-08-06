@@ -29,13 +29,17 @@ export const HeaderCell = ({
 
   let headerContent
 
+  let align = 'flex-start'
+  if (col.align) align = col.align
+  if (col.align === 'right') align = 'flex-end'
+
   if (col.renderHeader) {
     headerContent = col.renderHeader({ col, colIndex: columnIndex })
   }
   //
   else {
     headerContent = (
-      <DefaultCell>
+      <DefaultCell style={{ justifyContent: align }}>
         {sort && col.isSortable && (
           <StyledIcon
             iconName={
@@ -52,16 +56,11 @@ export const HeaderCell = ({
     )
   }
 
-  let align = 'flex-start'
-  if (col.align) align = col.align
-  if (col.align === 'right') align = 'flex-end'
-
   return (
     <Root
       style={{
         ...style,
-        cursor: isLoading ? 'wait' : 'pointer',
-        justifyContent: align
+        cursor: isLoading ? 'wait' : 'pointer'
       }}
       onClick={() => {
         onClick && onClick(col)

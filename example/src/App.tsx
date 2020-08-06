@@ -45,7 +45,8 @@ const getCols = (
             <Icon iconName='Calendar' />
           </div>
         )
-      }
+      },
+      align: 'center'
     },
     {
       key: 'address',
